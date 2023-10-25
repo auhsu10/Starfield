@@ -1,20 +1,25 @@
 Particle[] group;
 OddballParticle[] group2;
+OddballParticle2[] group3;
 boolean backgroundMode=false;
 int dotsType1=4000;
 int dotsType2=200;
-void setup()
-{
+int streakLinesType=200;
+
+void setup() {
   size(600,600);
   group=new Particle[dotsType1];
   group2=new OddballParticle[dotsType2];
+  group3=new OddballParticle2[streakLinesType];
   for(int i=0;i<group.length-1;i++)
     group[i]=new Particle();
   for(int i=0;i<group2.length-1;i++)
     group2[i]=new OddballParticle();
+    for(int i=0;i<group2.length-1;i++)
+    group3[i]=new OddballParticle2();
 }
-void draw()
-{
+
+void draw() {
   background(0);
   translate(300,300);
   for(int i=0;i<group2.length-1;i++){
@@ -25,8 +30,14 @@ void draw()
     group[i].show();
     group[i].move();
   }
-  System.out.println(group.length);
+  for(int i=0;i<group3.length-1;i++){
+    group3[i].show();
+    group3[i].lineExtend();
+    group3[i].move();
+  }
+  //System.out.println(group.length);
 }
+
 void keyPressed() {
   if(key=='r'||key=='R'){
     group=new Particle[4000];
@@ -53,9 +64,10 @@ void keyPressed() {
     dotsType2-=100;
     redraw();
   }
+  System.out.println(keyCode);
 }
-class Particle
-{
+
+class Particle {
   double myX,myY,mySpeed,myAngle,mySize;
   int myColor;
   Particle(){
@@ -63,10 +75,11 @@ class Particle
     myY=0;
     mySpeed=(Math.random()*10);
     myAngle=(Math.random()*(2*PI));
-    mySize=4;
-    myColor=color((int)(Math.random()*255),(int)(Math.random()*255),(int)(Math.random()*255));
+    mySize=3;
+    myColor=color((int)(Math.random()*160),(int)(Math.random()*100)+100,255);
   }
   void show(){
+    stroke(0);
     fill(myColor);
     ellipse((float)myX,(float)myY,(float)mySize,(float)mySize);
   }
@@ -81,14 +94,44 @@ class Particle
   }
 }
 
-class OddballParticle extends Particle
-{
+class OddballParticle extends Particle {
   OddballParticle(){
     myX=0;
     myY=0;
     mySpeed=(Math.random()*5);
     myAngle=(Math.random()*(2*PI));
-    mySize=8;
+    mySize=5;
     myColor=color(200,200,200);
+  }
+}
+
+class OddballParticle2 extends Particle {
+  double extend;
+  OddballParticle2(){
+    myX=0;
+    myY=0;
+    mySpeed=(Math.random()*5);
+    myAngle=(Math.random()*(2*PI));
+    mySize=4;
+    myColor=color(200,200,200);
+    extend=4;
+  }
+  void show(){
+    fill(myColor);
+    stroke(255);
+    line((float)(myX+(2*extend)),(float)(myY+(2*extend)),(float)(myX+(3*extend)),(float)(myY+(3*extend)));
+  }
+  void move(){
+    rotate((float)myAngle);
+    myX=myX+mySpeed;
+    myY=myY+mySpeed;
+    if(myX<=-400||myY<=-400||myX>=400||myY>=400){
+      myX=0;
+      myY=0;
+      extend=10;
+    }
+  }
+  void lineExtend(){
+    extend+=0.5;
   }
 }
