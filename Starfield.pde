@@ -5,7 +5,6 @@ boolean backgroundMode=false;
 int dotsType1=4000;
 int dotsType2=200;
 int streakLinesType=200;
-double anglesum=0;
 
 void setup() {
   size(600,600);
@@ -36,27 +35,36 @@ void draw() {
     group3[i].lineExtend();
     group3[i].move();
   }
+  for(int i=0;i<group.length-1;i++){
+    group[i].demove();
+  }
+  for(int i=0;i<group2.length-1;i++){
+    group2[i].demove();
+  }
+  for(int i=0;i<group3.length-1;i++){
+    group3[i].demove();
+  }
   translate(-300,-300);
-  //beginShape();
-  //vertex(0,0);
-  //vertex(0,100);
-  //vertex(25,100);
-  //vertex(50,50);
-  //vertex(550,50);
-  //vertex(575,100);
-  //vertex(600,100);
-  //vertex(600,0);
-  //endShape();
-  //beginShape();
-  //vertex(0,600);
-  //vertex(0,500);
-  //vertex(25,500);
-  //vertex(50,550);
-  //vertex(550,550);
-  //vertex(575,500);
-  //vertex(600,500);
-  //vertex(600,600);
-  //endShape();
+  beginShape();
+  vertex(0,0);
+  vertex(0,100);
+  vertex(25,100);
+  vertex(50,50);
+  vertex(550,50);
+  vertex(575,100);
+  vertex(600,100);
+  vertex(600,0);
+  endShape();
+  beginShape();
+  vertex(0,600);
+  vertex(0,500);
+  vertex(25,500);
+  vertex(50,550);
+  vertex(550,550);
+  vertex(575,500);
+  vertex(600,500);
+  vertex(600,600);
+  endShape();
 }
 
 void keyPressed() {
@@ -67,6 +75,8 @@ void keyPressed() {
       group[i]=new Particle();
     for(int i=0;i<group2.length-1;i++)
       group2[i]=new OddballParticle();
+    for(int i=0;i<group3.length-1;i++)
+      group3[i]=new OddballParticle2();
     redraw();
   }
   if(keyCode==38 && dotsType1<8000){
@@ -105,13 +115,15 @@ class Particle {
   }
   void move(){
     rotate((float)myAngle);
-    anglesum+=myAngle;
     myX=myX+mySpeed;
     myY=myY+mySpeed;
     if(myX<=-400||myY<=-400||myX>=400||myY>=400){
       myX=0;
       myY=0;
     }
+  }
+  void demove(){
+    rotate((float)(-1*myAngle));
   }
 }
 
@@ -144,7 +156,6 @@ class OddballParticle2 extends Particle {
   }
   void move(){
     rotate((float)myAngle);
-    anglesum+=myAngle;
     myX=myX+mySpeed;
     myY=myY+mySpeed;
     if(myX<=-300||myY<=-300||myX>=300||myY>=300){
