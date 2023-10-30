@@ -1,17 +1,20 @@
+StatParticle[] stillgroup;
 Particle[] group;
 OddballParticle[] group2;
 OddballParticle2[] group3;
 boolean backgroundMode=false;
 int dotsType1=4000;
 int dotsType2=200;
-int streakLinesType=200;
 int speed=0;
 
 void setup() {
   size(600,600);
+  stillgroup=new StatParticle[60];
   group=new Particle[dotsType1];
   group2=new OddballParticle[dotsType2];
-  group3=new OddballParticle2[streakLinesType];
+  group3=new OddballParticle2[dotsType2];
+  for(int i=0;i<stillgroup.length-1;i++)
+    stillgroup[i]=new StatParticle();
   for(int i=0;i<group.length-1;i++)
     group[i]=new Particle();
   for(int i=0;i<group2.length-1;i++)
@@ -23,6 +26,9 @@ void setup() {
 void draw() {
   background(0);
   translate(300,300);
+  for(int i=0;i<stillgroup.length-1;i++){
+    stillgroup[i].show();
+  }
   for(int i=0;i<group2.length-1;i++){
     group2[i].show();
     group2[i].move();
@@ -106,6 +112,18 @@ void keyPressed() {
   if(keyCode==37 && dotsType2>100){
     dotsType2-=100;
     redraw();
+  }
+}
+
+class StatParticle {
+  double myX,myY,mySize;
+  StatParticle() {
+    myX=(int)(Math.random()*600)-300;
+    myY=(int)(Math.random()*600)-300;
+    mySize=(int)(Math.random()*4);
+  }
+  void show(){
+    ellipse((float)myX,(float)myY,(float)mySize,(float)mySize);
   }
 }
 
