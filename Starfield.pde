@@ -5,6 +5,7 @@ boolean backgroundMode=false;
 int dotsType1=4000;
 int dotsType2=200;
 int streakLinesType=200;
+int speed=0;
 
 void setup() {
   size(600,600);
@@ -45,6 +46,7 @@ void draw() {
     group3[i].demove();
   }
   translate(-300,-300);
+  fill(120);
   beginShape();
   vertex(0,0);
   vertex(0,100);
@@ -65,12 +67,22 @@ void draw() {
   vertex(600,500);
   vertex(600,600);
   endShape();
+  textAlign(CENTER);
+  fill(0);
+  textSize(15);
+  text("Speed: "+speed+" m/s",300,30);
+  text("Number of blue stars: "+dotsType1,150,580);
+  text("Number of white stars: "+dotsType2*2,450,580);
+  if(speed<300000000)
+    speed+=2000000;
 }
 
 void keyPressed() {
   if(key=='r'||key=='R'){
-    group=new Particle[4000];
-    group2=new OddballParticle[200];
+    speed=0;
+    group=new Particle[dotsType1];
+    group2=new OddballParticle[dotsType2];
+    group3=new OddballParticle2[dotsType2];
     for(int i=0;i<group.length-1;i++)
       group[i]=new Particle();
     for(int i=0;i<group2.length-1;i++)
@@ -79,7 +91,7 @@ void keyPressed() {
       group3[i]=new OddballParticle2();
     redraw();
   }
-  if(keyCode==38 && dotsType1<8000){
+  if(keyCode==38 && dotsType1<5000){
     dotsType1+=1000;
     redraw();
   }
