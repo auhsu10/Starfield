@@ -9,7 +9,7 @@ int speed=0;
 
 void setup() {
   size(600,600);
-  stillgroup=new StatParticle[60];
+  stillgroup=new StatParticle[100];
   group=new Particle[dotsType1];
   group2=new OddballParticle[dotsType2];
   group3=new OddballParticle2[dotsType2];
@@ -52,7 +52,8 @@ void draw() {
     group3[i].demove();
   }
   translate(-300,-300);
-  fill(120);
+  //gray parts
+  fill(160);
   beginShape();
   vertex(0,0);
   vertex(0,100);
@@ -73,12 +74,57 @@ void draw() {
   vertex(600,500);
   vertex(600,600);
   endShape();
-  textAlign(CENTER);
+  //blue parts
+  fill(80,150,250);
+  beginShape();
+  vertex(0,5);
+  vertex(24,5);
+  vertex(46,48);
+  vertex(24,95);
+  vertex(0,95);
+  endShape();
+  beginShape();
+  vertex(600,5);
+  vertex(576,5);
+  vertex(554,48);
+  vertex(576,95);
+  vertex(600,95);
+  endShape();
+  beginShape();
+  vertex(600,595);
+  vertex(576,595);
+  vertex(554,552);
+  vertex(576,505);
+  vertex(600,505);
+  endShape();
+  beginShape();
+  vertex(0,595);
+  vertex(24,595);
+  vertex(46,552);
+  vertex(24,505);
+  vertex(0,505);
+  endShape();
+  //black parts
   fill(0);
+  beginShape();
+  vertex(25,0);
+  vertex(50,45);
+  vertex(550,45);
+  vertex(575,0);
+  endShape();
+  beginShape();
+  vertex(25,600);
+  vertex(50,555);
+  vertex(550,555);
+  vertex(575,600);
+  endShape();
+  textAlign(CENTER);
+  fill(255);
+  line(300,555,300,600);
   textSize(15);
-  text("Speed: "+speed+" m/s",300,30);
-  text("Number of blue stars: "+dotsType1,150,580);
-  text("Number of white stars: "+dotsType2*2,450,580);
+  text("Speed: "+speed+" m/s",300,28);
+  text("Number of blue stars: "+dotsType1,175,580);
+  text("Number of white stars: "+dotsType2*2,425,580);
   if(speed<300000000)
     speed+=2000000;
 }
@@ -123,6 +169,7 @@ class StatParticle {
     mySize=(int)(Math.random()*4);
   }
   void show(){
+    fill(255);
     ellipse((float)myX,(float)myY,(float)mySize,(float)mySize);
   }
 }
