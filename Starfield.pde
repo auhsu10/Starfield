@@ -2,12 +2,12 @@ StatParticle[] stillgroup;
 Particle[] group;
 OddballParticle[] group2;
 OddballParticle2[] group3;
-boolean backgroundMode=false;
-int dotsType1=4000;
-int dotsType2=200;
-int speed=0;
+public boolean backgroundMode=false;
+public int dotsType1=4000;
+public int dotsType2=200;
+public int speed=0;
 
-void setup() {
+public void setup() {
   size(600,600);
   stillgroup=new StatParticle[100];
   group=new Particle[dotsType1];
@@ -23,7 +23,7 @@ void setup() {
     group3[i]=new OddballParticle2();
 }
 
-void draw() {
+public void draw() {
   background(0);
   translate(300,300);
   for(int i=0;i<stillgroup.length-1;i++){
@@ -129,7 +129,7 @@ void draw() {
     speed+=2000000;
 }
 
-void keyPressed() {
+public void keyPressed() {
   if(key=='r'||key=='R'){
     speed=0;
     group=new Particle[dotsType1];
@@ -162,22 +162,22 @@ void keyPressed() {
 }
 
 class StatParticle {
-  double myX,myY,mySize;
-  StatParticle() {
+  protected double myX,myY,mySize;
+  public StatParticle() {
     myX=(int)(Math.random()*600)-300;
     myY=(int)(Math.random()*600)-300;
     mySize=(int)(Math.random()*4);
   }
-  void show(){
+  public void show(){
     fill(255);
     ellipse((float)myX,(float)myY,(float)mySize,(float)mySize);
   }
 }
 
-class Particle {
-  double myX,myY,mySpeed,myAngle,mySize;
-  int myColor;
-  Particle(){
+public class Particle {
+  protected double myX,myY,mySpeed,myAngle,mySize;
+  protected int myColor;
+  public Particle(){
     myX=0;
     myY=0;
     mySpeed=(Math.random()*10);
@@ -185,12 +185,12 @@ class Particle {
     mySize=3;
     myColor=color((int)(Math.random()*160),(int)(Math.random()*100)+100,255);
   }
-  void show(){
+  public void show(){
     stroke(0);
     fill(myColor);
     ellipse((float)myX,(float)myY,(float)mySize,(float)mySize);
   }
-  void move(){
+  public void move(){
     rotate((float)myAngle);
     myX=myX+mySpeed;
     myY=myY+mySpeed;
@@ -199,13 +199,13 @@ class Particle {
       myY=0;
     }
   }
-  void demove(){
+  public void demove(){
     rotate((float)(-1*myAngle));
   }
 }
 
-class OddballParticle extends Particle {
-  OddballParticle(){
+public class OddballParticle extends Particle {
+  public OddballParticle(){
     myX=0;
     myY=0;
     mySpeed=(Math.random()*5);
@@ -215,9 +215,9 @@ class OddballParticle extends Particle {
   }
 }
 
-class OddballParticle2 extends Particle {
-  double extend;
-  OddballParticle2(){
+public class OddballParticle2 extends Particle {
+  private double extend;
+  public OddballParticle2(){
     myX=0;
     myY=0;
     mySpeed=(Math.random()*5);
@@ -226,12 +226,12 @@ class OddballParticle2 extends Particle {
     myColor=color(200,200,200);
     extend=4;
   }
-  void show(){
+  public void show(){
     fill(myColor);
     stroke(255);
     line((float)(myX+(2*extend)),(float)(myY+(2*extend)),(float)(myX+(3*extend)),(float)(myY+(3*extend)));
   }
-  void move(){
+  public void move(){
     rotate((float)myAngle);
     myX=myX+mySpeed;
     myY=myY+mySpeed;
@@ -241,7 +241,7 @@ class OddballParticle2 extends Particle {
       extend=10;
     }
   }
-  void lineExtend(){
+  public void lineExtend(){
     extend+=0.5;
   }
 }
